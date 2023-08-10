@@ -1,3 +1,4 @@
+import re
 from distutils.core import setup
 import os
 
@@ -13,9 +14,16 @@ CLASSIFIERS = [
 ]
 
 
+def get_version(filename):
+    path = os.path.join(os.path.dirname(__file__), filename)
+    with open(path, encoding="utf-8") as handle:
+        content = handle.read()
+    return re.search(r'__version__ = "([^"]+)"', content).group(1)
+
+
 setup(
     name='django-onetomany',
-    version='0.0.1',
+    version=get_version('onetomany/__init__.py'),
     author='Adi Sieker',
     author_email='adi@sieker.io',
     packages=['onetomany',],
